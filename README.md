@@ -1,2 +1,2 @@
-# Hakoot
+# Scoots
 Kahoot mimic!
