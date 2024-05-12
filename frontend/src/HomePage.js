@@ -10,25 +10,25 @@ function HomePage({ loggedIn, selectRoute, routeSelected }) {
 
   return (
     <div className="component-container">
-      <h1>Scoots</h1>
-      <p>Welcome to Scoots!</p>
-      <nav>
-          {routeSelected ?
-          null
+      <div className='home-top-bar'>
+        <div className='home-top-bar-left'>
+          <h1>Scoots</h1>
+          <Link className='link-button' onClick={selectRouteFromApp} to='/JoinRoom'>Join Room</Link>
+          <Link className='link-button' onClick={selectRouteFromApp} to='/CreateRoom'>Create Room</Link>
+          {loggedIn ?
+          <Link className='link-button' to='/Profile'>Profile</Link>
           :
-          <>
-              <Link onClick={selectRouteFromApp} to='/AboutPage'>About</Link>
-              <Link onClick={selectRouteFromApp} to='/JoinRoom'>Join Room</Link>
-          </>
+          null
           }
-          <>
-            {loggedIn ?
-            <Link to='/HomePage'>Logout</Link>
-            :
-            <Link to='/LoginScreen'>Login</Link>
-            }
-          </>
-        </nav>
+        </div>
+        <div className='home-top-bar-right'>
+          {loggedIn ?
+          <Link to='/HomePage'>Logout</Link>
+          :
+          <Link to='/LoginScreen'>Login</Link>
+          }
+        </div>
+      </div>
     </div>
   );
 }

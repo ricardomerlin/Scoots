@@ -11,8 +11,8 @@
 .component-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center; */
+    /* justify-content: center; */
     height: 92vh;
     width: 92vw;
     border-radius: 10px;

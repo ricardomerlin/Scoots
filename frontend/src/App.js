@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import AboutPage from './AboutPage';
 import JoinRoom from './JoinRoom';
+import CreateRoom from './CreateRoom';
 import LoginScreen from './LoginScreen';
 import HomePage from './HomePage';
 import './styles/App.css';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/HomePage" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected}/>} />
           <Route path="/AboutPage" element={<AboutPage />} />
           <Route path="/JoinRoom" element={<JoinRoom />} />
+          <Route path="/CreateRoom" element={<CreateRoom />} />
           <Route path="/LoginScreen" element={<LoginScreen />} />
         </Routes>
       </div>
