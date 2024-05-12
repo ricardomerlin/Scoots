@@ -11,7 +11,7 @@ import './styles/App.css';
 
 function App() {
   const [data, setData] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [routeSelected, setRouteSelected] = useState(false);
 
   const selectRoute = () => {

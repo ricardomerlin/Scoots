@@ -1,6 +1,6 @@
 function ProfilePage () {
     return (
-        <div>
+        <div className="component-container">
             <h1>Profile</h1>
         </div>
     )
