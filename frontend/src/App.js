@@ -5,6 +5,8 @@ import JoinRoom from './JoinRoom';
 import CreateRoom from './CreateRoom';
 import LoginScreen from './LoginScreen';
 import HomePage from './HomePage';
+import ProfilePage from './ProfilePage';
+import UserSets from './UserSets';
 import './styles/App.css';
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
           <Route path="/JoinRoom" element={<JoinRoom />} />
           <Route path="/CreateRoom" element={<CreateRoom />} />
           <Route path="/LoginScreen" element={<LoginScreen />} />
+          <Route path="/ProfilePage" element={<ProfilePage />} />
+          <Route path="/UserSets" element={<UserSets />} />
         </Routes>
       </div>
     </Router>
