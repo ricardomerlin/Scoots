@@ -25,7 +25,7 @@ function App() {
           <Route path="/" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected}/>} />
           <Route path="/HomePage" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected}/>} />
           <Route path="/AboutPage" element={<AboutPage />} />
-          <Route path="/JoinRoom" element={<JoinRoom />} />
+          <Route path="/JoinRoom" element={<JoinRoom loggedIn={loggedIn}/>} />
           <Route path="/CreateRoom" element={<CreateRoom />} />
           <Route path="/LoginScreen" element={<LoginScreen />} />
           <Route path="/ProfilePage" element={<ProfilePage />} />
