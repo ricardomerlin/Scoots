@@ -1,0 +1,11 @@
+<!-- templates/myapp/questionset_list.html -->
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <h2>Question Sets</h2>
+    <ul>
+        {% for questionset in questionsets %}
+        <li><a href="{% url 'questionset_detail' questionset.pk %}">{{ questionset.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
