@@ -19,9 +19,13 @@ function App() {
   }
 
   const profileInformation = {
+    firstName: 'John',
+    lastName: 'Doe',
     username: 'User123',
     email: 'r@gmaill.com',
     password: 'password',
+    profilePicture: 'https://m.media-amazon.com/images/I/71ZE-ISEadL._AC_UF1000,1000_QL80_.jpg',
+    coverImage: 'https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg?cs=srgb&dl=pexels-pixabay-206359.jpg&fm=jpg',
     sets: [
       {
         name: 'Set1',
@@ -88,7 +92,7 @@ function App() {
           <Route path="/JoinRoom" element={<JoinRoom loggedIn={loggedIn}/>} />
           <Route path="/CreateRoom" element={<CreateRoom />} />
           <Route path="/LoginScreen" element={<LoginScreen />} />
-          <Route path="/ProfilePage" element={<ProfilePage />} />
+          <Route path="/ProfilePage" element={<ProfilePage profileInformation={profileInformation}/>} />
           <Route path="/UserSets" element={<UserSets profileSets={profileInformation.sets}/>} />
         </Routes>
       </div>
