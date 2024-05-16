@@ -8,7 +8,6 @@ function JoinRoom({ loggedIn }) {
 
     return (
         <div className="join-room-container">
-            {/* <button className='back-home-button'>← Back Home</button> */}
             <Link to='/' className='back-home-button'>← Back Home</Link>
             <h1>Join Room</h1>
             <p>Enter the ID of the room you are trying to join, or {loggedIn ? 'create a new room.' : 'log in to create a new room.'}</p>

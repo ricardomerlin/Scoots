@@ -7,6 +7,7 @@
     width: 100vw;
     background-color: #54dc8f;
     font-family: 'Fredoka One', sans-serif;
+    background-image: url("https://www.transparenttextures.com/patterns/checkered-pattern.png");
 }
 
 .component-container {
@@ -17,4 +18,13 @@
     border-radius: 10px;
     box-shadow: 3px 3px 10px 3px #155a33;
     background-color: #93e6b7;
+}
+
+.back-home-button {
+    text-decoration: none;
+    color: inherit;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
 }

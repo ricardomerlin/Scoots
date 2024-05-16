@@ -8,11 +8,35 @@
 .profile-container {
     display: flex;
     height: 100%;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    /* align-items: center; */
     background-color: inherit;
     border-radius: inherit;
-    background-image: url("https://www.transparenttextures.com/patterns/checkered-pattern.png");
+}
+
+.profile-container-left {
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    align-items: center;
+    border-radius: inherit;
+}
+
+.profile-container-right {
+    display: flex;
+    width: 40%;
+    font-size: 1.5em;
+    color: white;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(101, 160, 101);
+    border: 2px solid black;
+    margin: 70px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    border-radius: inherit;
+    background-image: url("https://www.transparenttextures.com/patterns/diagonales-decalees.png");
 }
 
 .cover-image {
@@ -33,7 +57,8 @@
 
 .profile-first-last-name {
     font-size: 4em;
-    margin: 30px;
+    margin-top: 30px;
+    margin-bottom: 5px;
 }
 
 .profile-user-name {
@@ -41,7 +66,12 @@
     margin: 0px;
 }
 
-.profile-email {
+.profile-role {
     font-size: 1.5em;
-    margin: 30px;
+    margin-top: 30px;
+
+}
+.profile-email, .profile-date-joined {
+    font-size: 1.5em;
+    margin: 20px;
 }
