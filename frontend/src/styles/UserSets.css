@@ -1,8 +1,20 @@
 .user-sets-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    margin-top: 3vh;
+    width: 100%;
+    height: 100%;
+}
+
+.set-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    height: 80%;
+    border-radius: 10px;
+    overflow-y: auto;
 }
 
 .set-card {
@@ -10,11 +22,85 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 80%;
-    height: 20%;
+    width: 250px;
+    height: 100px;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 3px 3px 10px 3px #155a33;
-    background-color: #93e6b7;
+    background-color: #ffffff;
+}
+
+.set-card:hover {
+    background-color: #f0f0f0;
+}
+
+.user-set-name {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.user-set-date-made {
+    font-size: 1em;
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: grey;
+}
+
+.user-set-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    height: 80%;
+    width: 80%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border: 1px solid black;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 40px;
+    background-image: url("https://www.transparenttextures.com/patterns/arches.png");
+    background-color: rgb(220, 255, 220);
+}
+
+.user-set-modal-close {
+    position: absolute;
+    right: 32px;
+    top: 32px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+}
+.user-set-modal-close:hover {
+    opacity: 1;
+}
+.user-set-modal-close:before, .user-set-modal-close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+}
+.user-set-modal-close:before {
+    transform: rotate(45deg);
+}
+.user-set-modal-close:after {
+    transform: rotate(-45deg);
+}
+
+.user-set-modal-name {
+    font-size: 2em;
+    margin-bottom: 10px;
+    margin-top: 40px;
+    overflow-x: auto;
+    width: 80%;
+}
+
+.user-set-question {
+    font-size: 1.5em;
+    margin-bottom: 5px;
 }

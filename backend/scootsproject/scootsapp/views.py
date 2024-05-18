@@ -4,10 +4,10 @@ from .models import QuestionSet, Question
 
 # Create your views here.
 def questionset_list(request):
-    print('I stink')
-    questionsets = QuestionSet.objects.all()
-    print(questionsets)
+    print('View is being called')
+    questionsets = QuestionSet.objects.filter(user=request.user)
     return render(request, 'scootsapp/questionset_list.html', {'questionsets': questionsets})
+
 
 def questionset_detail(request, pk):
     questionset = get_object_or_404(QuestionSet, pk=pk, user=request.user)
