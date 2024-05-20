@@ -13,16 +13,22 @@ class User(AbstractUser):
         return self.username
 
 class QuestionSet(models.Model):
-    name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     user = models.ForeignKey(User, related_name='questionsets', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.title
+
+class Tag(models.Model):
+    tag_name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.tag_name
     
 class Question(models.Model):
-    text = models.TextField()
     question_set = models.ForeignKey(QuestionSet, related_name='questions', on_delete=models.CASCADE)
+    text = models.TextField()
+    tags = models.ManyToManyField(Tag, related_name='questions')
 
     def __str__(self):
         return self.text
-
