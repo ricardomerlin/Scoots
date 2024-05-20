@@ -10,13 +10,20 @@ import UserSets from './UserSets';
 import './styles/App.css';
 
 function App() {
-  const [data, setData] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [user, setUser] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [routeSelected, setRouteSelected] = useState(false);
 
   const selectRoute = () => {
     setRouteSelected(true);
   }
+
+  const handleLogin = (login, data) => {
+    setLoggedIn(login);
+    setUser(data);
+  }
+
+  console.log(user)
 
   const profileInformation = {
     firstName: 'John',
@@ -125,7 +132,6 @@ function App() {
     ]
   }
   
-  console.log(profileInformation)
 
   return (
     <Router>
@@ -136,7 +142,7 @@ function App() {
           <Route path="/AboutPage" element={<AboutPage />} />
           <Route path="/JoinRoom" element={<JoinRoom loggedIn={loggedIn}/>} />
           <Route path="/CreateRoom" element={<CreateRoom />} />
-          <Route path="/LoginScreen" element={<LoginScreen />} />
+          <Route path="/LoginScreen" element={<LoginScreen handleLogin={handleLogin}/>} />
           <Route path="/ProfilePage" element={<ProfilePage profileInformation={profileInformation}/>} />
           <Route path="/UserSets" element={<UserSets profileSets={profileInformation.sets}/>} />
         </Routes>
