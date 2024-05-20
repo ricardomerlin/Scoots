@@ -6,7 +6,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=255, unique=True)
-    password = models.CharField(max_length=255)
+    pword = models.CharField(max_length=255, default='')
     role = models.CharField(max_length=255, default='student')
     date_joined = models.DateTimeField(auto_now_add=True)
 

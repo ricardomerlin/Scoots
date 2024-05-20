@@ -8,21 +8,23 @@ function UserSets ({ profileSets }) {
     const [selectedSet, setSelectedSet] = useState(null);
 
     const shortenName = (name) => {
-        if (name.length > 20) {
-            return name.slice(0, 20) + '...';
+        if (name.length > 30) {
+            return name.slice(0, 30) + '...';
         }
         return name;
     }
 
     const convertDate = (date) => {
-        const dateArray = date.split('-');
-        return `${dateArray[1]}/${dateArray[2]}/${dateArray[0]}`;
+        const dateArray = date.split('/');
+        const newDate = new Date(`${dateArray[2]}-${dateArray[0]}-${dateArray[1]}`);
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return newDate.toLocaleDateString('en-US', options);
     }
 
     const mappedSets = profileSets.map((set) => {
         return (
             <div className='set-card' key={set.id} onClick={() => {setSelectedSet(set); setModalOpen(true);}}>
-                <p className='user-set-name'>{shortenName(set.name)}</p>
+                <p className='user-set-name'>{set.name}</p>
                 <p className='user-set-date-made'>{set.createdAt}</p>
             </div>
         )
@@ -41,7 +43,7 @@ function UserSets ({ profileSets }) {
             <div className='user-set-modal'>
                 <a href='#' className='user-set-modal-close' onClick={() => setModalOpen(false)}></a>
                 <h2 className='user-set-modal-name'>{selectedSet.name}</h2>
-                <p className='user-set-modal-date-made'>Created on {selectedSet.createdAt}</p>
+                <p className='user-set-modal-date-made'>Created on {convertDate(selectedSet.createdAt)}</p>
                 <div className='user-set-questions'>
                     {selectedSet.questions && selectedSet.questions.map((question, index) => {
                         return (
