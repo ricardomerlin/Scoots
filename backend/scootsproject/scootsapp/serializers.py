@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, QuestionSet, Question, Tag
+from .models import User, QuestionSet, Question, Tag, WrongAnswer, PreviousGame, CurrentSet
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,3 +26,24 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'date_joined', 'questionsets']
+
+class WrongAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WrongAnswer
+        fields = ['id', 'text']
+
+class PreviousGameSerializer(serializers.ModelSerializer):
+    questions = QuestionSerializer(many=True, read_only=True)
+    owner = UserSerializer(many=True, read_only=True)
+    players = UserSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = PreviousGame
+        fields = ['id', 'questions', 'competitive', 'winner', 'date', 'owner', 'players']
+
+class CurrentSetSerializer(serializers.ModelSerializer):
+    questions = QuestionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = CurrentSet
+        fields = ['id', 'questions']

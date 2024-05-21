@@ -42,3 +42,20 @@ class WrongAnswer(models.Model):
 
     def __str__(self):
         return self.text
+    
+class PreviousGame(models.Model):
+    questions = models.ManyToManyField(Question, related_name='previous_game')
+    competitive = models.BooleanField(default=False)
+    winner = models.CharField(max_length=255, default='')
+    date = models.DateTimeField(auto_now_add=True)
+    owner = models.ManyToManyField(User, related_name='previous_games_created')
+    players = models.ManyToManyField(User, related_name='previous_games_played')
+
+    def __str__(self):
+        return self.previous_game.title
+    
+class CurrentSet(models.Model):
+    questions = models.ManyToManyField(Question, related_name='current_set')
+
+    def __str__(self):
+        return self.current_set.title

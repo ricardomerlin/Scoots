@@ -24,7 +24,7 @@ function UserSets ({ profileSets }) {
     const mappedSets = profileSets.map((set) => {
         return (
             <div className='set-card' key={set.id} onClick={() => {setSelectedSet(set); setModalOpen(true);}}>
-                <p className='user-set-name'>{set.name}</p>
+                <p className='user-set-name'>{shortenName(set.name)}</p>
                 <p className='user-set-date-made'>{set.createdAt}</p>
             </div>
         )
