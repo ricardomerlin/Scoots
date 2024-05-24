@@ -13,7 +13,8 @@ function LoginScreen ({ handleLogin }) {
 
     const submitLogin = (e) => {
         e.preventDefault();
-        console.log('we are handling login')
+        console.log(username)
+        console.log(password)
         fetch('http://127.0.0.1:8000/api/users/')
             .then((response) => {
                 return response.json()
@@ -22,7 +23,7 @@ function LoginScreen ({ handleLogin }) {
                 console.log('Success:', data);
                 for (let i = 0; i < data.length; i++) {
                     if (data[i].username === username && data[i].password === password) {
-                        console.log(data[i])
+                        console.log('Please')
                         handleLogin(true, data[i]);
                         navigate('/')
                     }

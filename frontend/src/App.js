@@ -7,6 +7,7 @@ import LoginScreen from './LoginScreen';
 import HomePage from './HomePage';
 import ProfilePage from './ProfilePage';
 import UserSets from './UserSets';
+import GameRunning from './GameRunning';
 import './styles/App.css';
 
 function App() {
@@ -44,7 +45,41 @@ function App() {
       quizzesCreated: 5,
       questionsAnswered: 10,
     },
-    sets: [
+    previousGames: [
+      {
+        roomName: 'Room1',
+        date: '01/01/2021',
+        winner: 'Ryan Boy',
+        players: ['John Doe', 'Jane Doe', 'Hamburgler', 'Ronald', 'Stevie'],
+        questions: [
+          {
+            question: 'Question1',
+            answer: 'Answer1',
+            wrongAnswers: ['Wrong1', 'Wrong2', 'Wrong3'],
+            tags: ['Tag1', 'Tag2', 'Tag3']
+          },
+          {
+            question: 'Question2',
+            answer: 'Answer2',
+            wrongAnswers: ['Wrong4', 'Wrong5', 'Wrong6'],
+            tags: ['Tag4', 'Tag5', 'Tag6']
+          },
+          {
+            question: 'Question3',
+            answer: 'Answer3',
+            wrongAnswers: ['Wrong7', 'Wrong8', 'Wrong9'],
+            tags: ['Tag7', 'Tag8', 'Tag9']
+          },
+          {
+            question: 'Question4',
+            answer: 'Answer4',
+            wrongAnswers: ['Wrong10', 'Wrong11', 'Wrong12'],
+            tags: ['Tag10', 'Tag11', 'Tag12']
+          }
+        ]
+      },
+    ],
+    savedSets: [
       {
         name: 'donkeydonkeydon keydonkeydonk eydonkeydonkeyd onkeydonkeydo nkeydonkeydonkey',
         createdAt: '01/01/2021',
@@ -145,6 +180,7 @@ function App() {
           <Route path="/LoginScreen" element={<LoginScreen handleLogin={handleLogin}/>} />
           <Route path="/ProfilePage" element={<ProfilePage profileInformation={profileInformation}/>} />
           <Route path="/UserSets" element={<UserSets profileSets={profileInformation.sets}/>} />
+          <Route path="/GameRunning" element={<GameRunning /> }/>
         </Routes>
       </div>
     </Router>
