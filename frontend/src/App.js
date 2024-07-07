@@ -12,7 +12,7 @@ import './styles/App.css';
 
 function App() {
   const [user, setUser] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [routeSelected, setRouteSelected] = useState(false);
 
   const selectRoute = () => {
@@ -176,10 +176,10 @@ function App() {
           <Route path="/HomePage" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected}/>} />
           <Route path="/AboutPage" element={<AboutPage />} />
           <Route path="/JoinRoom" element={<JoinRoom loggedIn={loggedIn}/>} />
-          <Route path="/CreateRoom" element={<CreateRoom />} />
+          <Route path="/CreateRoom" element={<CreateRoom profileSets={profileInformation.savedSets}/>} />
           <Route path="/LoginScreen" element={<LoginScreen handleLogin={handleLogin}/>} />
           <Route path="/ProfilePage" element={<ProfilePage profileInformation={profileInformation}/>} />
-          <Route path="/UserSets" element={<UserSets profileSets={profileInformation.sets}/>} />
+          <Route path="/UserSets" element={<UserSets profileSets={profileInformation.savedSets}/>} />
           <Route path="/GameRunning" element={<GameRunning /> }/>
         </Routes>
       </div>

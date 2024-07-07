@@ -1,19 +1,14 @@
 function NewSetForm({ setQuestionSet, setTopics, setCompetitive }) {
     return (
         <>
-            <label>
+            <label className="new-set-name">
                 New Set Name:
                 <input type="text" name="questionSet" onChange={(e) => setQuestionSet(e.target.value)} />
             </label>
-            <label>
+            <label className="topics-field">
                 Topics:
                 <input type="text" name="topics" onChange={(e) => setTopics(e.target.value.split(','))} />
             </label>
-            <label>
-                Is this a competitive room?
-                <input type="checkbox" name="competitive" onChange={(e) => setCompetitive(e.target.checked)} />
-            </label>
-            <button type="submit">Create Set</button>
         </>
     )
 }

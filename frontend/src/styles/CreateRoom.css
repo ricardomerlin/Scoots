@@ -1,0 +1,19 @@
+.create-room-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 10%;
+}
+
+.create-room-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.room-name, .new-or-old-question, .new-set-name, .topics-field {
+    margin: 10px;
+}

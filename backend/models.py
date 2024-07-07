@@ -47,8 +47,33 @@ class Question(db.Model, SerializerMixin):
     question = db.Column(db.String(80), nullable=False)
     answer = db.Column(db.String(80), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
+    answer_id = db.Column(db.String(400), ForeignKey('answers_table.id'), nullable=True)
     games = db.relationship('Game', back_populates='questions')
 
     def __repr__(self):
         return f'<Question {self.question}>'
+    
+class Answer(db.Model, SerializerMixin):
+    __tablename__ = 'answers_table'
+
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(80), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    games = db.relationship('Game', back_populates='answers')
+
+    def __repr__(self):
+        return f'<Answer {self.answer}>'
+    
+class QuestionSets(db.Model, SerializerMixin):
+    __tablename__ = 'question_sets_table'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    questions = db.relationship('Question', back_populates='question_sets')
+
+    def __repr__(self):
+        return f'<QuestionSet {self.name}>'
