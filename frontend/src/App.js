@@ -8,11 +8,12 @@ import HomePage from './HomePage';
 import ProfilePage from './ProfilePage';
 import UserSets from './UserSets';
 import GameRunning from './GameRunning';
+import CreateUser from './CreateUser';
 import './styles/App.css';
 
 function App() {
   const [user, setUser] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [routeSelected, setRouteSelected] = useState(false);
 
   const selectRoute = () => {
@@ -181,6 +182,7 @@ function App() {
           <Route path="/ProfilePage" element={<ProfilePage profileInformation={profileInformation}/>} />
           <Route path="/UserSets" element={<UserSets profileSets={profileInformation.savedSets}/>} />
           <Route path="/GameRunning" element={<GameRunning /> }/>
+          <Route path="/CreateUser" element={<CreateUser />}/>
         </Routes>
       </div>
     </Router>

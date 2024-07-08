@@ -15,10 +15,11 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(80), nullable=False)
     firstname = db.Column(db.String(80), nullable=False)
     lastname = db.Column(db.String(80), nullable=False)
-    password = db.Column(db.String(120), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    password = db.Column(db.String(400), nullable=False)
+    member_since = db.Column(db.DateTime, default=datetime.utcnow)
 
     games = db.relationship('Game', back_populates='players')
     
@@ -66,7 +67,7 @@ class Answer(db.Model, SerializerMixin):
     def __repr__(self):
         return f'<Answer {self.answer}>'
     
-class QuestionSets(db.Model, SerializerMixin):
+class QuestionSet(db.Model, SerializerMixin):
     __tablename__ = 'question_sets_table'
 
     id = db.Column(db.Integer, primary_key=True)

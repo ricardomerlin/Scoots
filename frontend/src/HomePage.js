@@ -24,7 +24,10 @@ function HomePage({ loggedIn, selectRoute, routeSelected }) {
             <Link className='link-button' to='/HomePage'>Logout</Link>
           </>
           :
-          <Link to='/LoginScreen'>Login</Link>
+          <>
+            <Link className='link-button' to='/LoginScreen'>Login</Link>
+            <Link className='link-button' to='/CreateUser'>Sign Up</Link>
+          </>
           }
         </div>
       </div>
