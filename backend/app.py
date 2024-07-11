@@ -23,27 +23,25 @@ db.init_app(app)
 def post_user():
     try:
         data = request.get_json()
-
         username = data.get('username')
         password = data.get('password')
         firstname = data.get('firstname')
         lastname = data.get('lastname')
-        birthday = data.get('birthday')
-
 
         existing_profile = User.query.filter_by(username=username).first()
-
+        print(existing_profile)
         if existing_profile:
             return {'error': 'Profile with this username already exists'}, 400
-        
+        print('not existing profile')
         new_user = User(
             username=username,
             password=bcrypt.generate_password_hash(password),
             firstname=firstname,
             lastname=lastname,
-            birthday=birthday,
         )
+        print('new user was created')
         db.session.add(new_user)
+        print('user was added')
         db.session.commit()
 
         return {'message': 'New user saved succesfully'}, 201

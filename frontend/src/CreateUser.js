@@ -8,7 +8,6 @@ function CreateUser() {
     const [lastName, setLastName] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [birthday, setBirthday] = useState('')
 
     const submitUser = async (e) => {
         e.preventDefault();
@@ -18,7 +17,6 @@ function CreateUser() {
                 lastName,
                 username,
                 password,
-                birthday,
             };
             const response = await fetch('http://127.0.0.1:5555/api/users', {
                 method: 'POST',
