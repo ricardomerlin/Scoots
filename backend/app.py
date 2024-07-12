@@ -18,15 +18,22 @@ bcrypt = Bcrypt(app)
 
 db.init_app(app)
 
+@app.get('/user/<int:id>')
+def get_user_by_id(id):
+    user = db.session.get(User, id)
+    if not user:
+        return {'Error': 'User not found'}
+    user_dict = user.to_dict()
+    return user_dict, 202
 
-@app.post('/api/user')
+@app.post('/user')
 def post_user():
     try:
         data = request.get_json()
         username = data.get('username')
         password = data.get('password')
-        firstname = data.get('firstname')
-        lastname = data.get('lastname')
+        firstname = data.get('firstName')
+        lastname = data.get('lastName')
 
         existing_profile = User.query.filter_by(username=username).first()
         print(existing_profile)
@@ -50,10 +57,7 @@ def post_user():
         print(e)
         return {'error': 'Error saving user profile'}, 400
 
-
-
-
-@app.post('/api/login')
+@app.post('/login')
 def post_login():
     data = request.get_json()
     username = data.get('username')
@@ -65,11 +69,9 @@ def post_login():
         return jsonify({'error': 'Invalid username or password'}), 401
 
     session['user_id'] = user.id
-    print(user.id)
-    print("login")
     return jsonify({'message': 'Login successful', 'id': user.id}), 200
 
-@app.post('/api/logout')
+@app.post('/logout')
 def post_logout():
     session.pop("user_id", None)
     return jsonify({'message': 'Logout successful'}), 200

@@ -11,21 +11,24 @@ function CreateUser() {
 
     const submitUser = async (e) => {
         e.preventDefault();
+        console.log('starting to submit user')
         if (firstName && lastName && username && password) {
+            console.log('got all components needed')
             const user = {
                 firstName,
                 lastName,
                 username,
                 password,
             };
-            const response = await fetch('http://127.0.0.1:5555/api/users', {
+            console.log(user)
+            const response = await fetch('http://127.0.0.1:5555/user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(user),
             });
-    
+            
             if (response.ok) {
                 const data = await response.json();
                 console.log('User created successfully:', data);

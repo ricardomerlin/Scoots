@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AboutPage from './AboutPage';
 import JoinRoom from './JoinRoom';
 import CreateRoom from './CreateRoom';
@@ -15,6 +16,13 @@ function App() {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [routeSelected, setRouteSelected] = useState(false);
+  const [profileID, setProfileID] = useState(null)
+
+  useEffect(() => {
+    if (profileID) {
+      getProfileDetails()
+    }
+  }, [profileID]);
 
   const selectRoute = () => {
     setRouteSelected(true);
@@ -25,7 +33,18 @@ function App() {
     setUser(data);
   }
 
-  console.log(user)
+  const getProfileDetails = () => {
+    fetch(`http://127.0.0.1:5555/user/${profileID}`)
+    .then(res => res.json())
+    .then(data => {
+      setUser(data)
+      setLoggedIn(true)
+    })
+    .catch(error => {
+      console.log('Error:', error)
+    })
+  }
+
 
   const profileInformation = {
     firstName: 'John',
@@ -167,6 +186,46 @@ function App() {
       }
     ]
   }
+
+  const submitLogin = async (username, password) => {
+    const response = await fetch('http://127.0.0.1:5555/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+            'username': username,
+            'password': password
+        }),
+    });
+    if (response.ok) {
+        const data = await response.json();
+        setProfileID(data.id)
+        setLoggedIn(true)
+    } else {
+        const errorData = await response.json().catch(() => null);
+        console.log('Error:', errorData)
+        setLoggedIn(false)
+    }
+  }
+
+  const handleLogout = async () => {
+    const response = await fetch('http://127.0.0.1:5555/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      setLoggedIn(false)
+      setUser(null)
+      setProfileID(null)
+    } else {
+      console.log('Logout failed');
+    }
+  };
   
 
   return (
@@ -174,11 +233,11 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected}/>} />
-          <Route path="/HomePage" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected}/>} />
+          <Route path="/HomePage" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected} handleLogout={handleLogout}/>} />
           <Route path="/AboutPage" element={<AboutPage />} />
           <Route path="/JoinRoom" element={<JoinRoom loggedIn={loggedIn}/>} />
           <Route path="/CreateRoom" element={<CreateRoom profileSets={profileInformation.savedSets}/>} />
-          <Route path="/LoginScreen" element={<LoginScreen handleLogin={handleLogin}/>} />
+          <Route path="/LoginScreen" element={<LoginScreen submitLogin={submitLogin} loggedIn={loggedIn}/>} />
           <Route path="/ProfilePage" element={<ProfilePage profileInformation={profileInformation}/>} />
           <Route path="/UserSets" element={<UserSets profileSets={profileInformation.savedSets}/>} />
           <Route path="/GameRunning" element={<GameRunning /> }/>
