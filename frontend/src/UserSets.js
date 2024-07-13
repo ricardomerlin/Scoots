@@ -34,7 +34,8 @@ function UserSets ({ profileSets }) {
         <div className="component-container">
             <Link to='/' className='back-home-button'>← Back Home</Link>
             <div className='user-sets-container'>
-                <h1>Your Question Sets</h1>
+                <h1 className='user-sets-main-header'>Your Question Sets</h1>
+                <h1 className='add-new-set-button'>Add New Set+</h1>
                 <div className='set-list'>
                     {mappedSets}
                 </div>

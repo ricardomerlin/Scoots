@@ -119,3 +119,19 @@
     background-color: white;
     padding: 20px;
 }
+
+.user-sets-main-header {
+    margin-bottom: 5px;
+}
+
+.add-new-set-button {
+    background-color: white;
+    padding: 6px;
+    border-radius: 10px;
+    border: 2px black solid;
+    font-size: 100%;
+}
+
+.add-new-set-button:hover {
+    background-color: red;
+}
