@@ -36,8 +36,10 @@ function UserSets ({ profileSets }) {
             <div className='user-sets-container'>
                 <h1 className='user-sets-main-header'>Your Question Sets</h1>
                 <h1 className='add-new-set-button'>Add New Set+</h1>
-                <div className='set-list'>
-                    {mappedSets}
+                <div className='set-list-container'>
+                    <div className='set-list'>
+                        {mappedSets}
+                    </div>
                 </div>
             </div>
             {modalOpen && selectedSet && 

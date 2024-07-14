@@ -10,6 +10,7 @@ import ProfilePage from './ProfilePage';
 import UserSets from './UserSets';
 import GameRunning from './GameRunning';
 import CreateUser from './CreateUser';
+import NewQuestionSet from './NewQuestionSet'
 import './styles/App.css';
 
 function App() {
@@ -242,6 +243,7 @@ function App() {
           <Route path="/UserSets" element={<UserSets profileSets={profileInformation.savedSets}/>} />
           <Route path="/GameRunning" element={<GameRunning /> }/>
           <Route path="/CreateUser" element={<CreateUser />}/>
+          <Route path="/NewQuestionSet" element={<NewQuestionSet />}/>
         </Routes>
       </div>
     </Router>
