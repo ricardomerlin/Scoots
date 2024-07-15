@@ -56,6 +56,34 @@ def post_user():
     except Exception as e:
         print(e)
         return {'error': 'Error saving user profile'}, 400
+    
+@app.post('/question')
+def post_question(question):
+    try:
+        print(question)
+        return {'message': 'Saved question'}
+    except Exception as e:
+        print(e)
+        return {'error': 'Error saving question'}, 201
+    
+@app.post('/questionset')
+def post_questionset():
+    try:
+        print('got here')
+        data = request.get_json()
+        print(data)
+        for i in data:
+            post_question(i)
+        return {'message': 'New user saved succesfully'}, 201
+
+    
+    except Exception as e:
+        print(e)
+        return {'error': 'Error saving new question set'}
+
+
+
+
 
 @app.post('/login')
 def post_login():

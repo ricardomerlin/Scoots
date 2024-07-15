@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import AboutPage from './AboutPage';
 import JoinRoom from './JoinRoom';
 import CreateRoom from './CreateRoom';
@@ -243,7 +242,7 @@ function App() {
           <Route path="/UserSets" element={<UserSets profileSets={profileInformation.savedSets}/>} />
           <Route path="/GameRunning" element={<GameRunning /> }/>
           <Route path="/CreateUser" element={<CreateUser />}/>
-          <Route path="/NewQuestionSet" element={<NewQuestionSet />}/>
+          <Route path="/NewQuestionSet" element={<NewQuestionSet loggedIn={loggedIn} user={user}/>}/>
         </Routes>
       </div>
     </Router>

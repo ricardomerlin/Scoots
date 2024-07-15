@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import './styles/UserSets.css';
+import { useNavigate } from 'react-router-dom';
 
 function UserSets ({ profileSets }) {
     
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedSet, setSelectedSet] = useState(null);
+
+    const navigate = useNavigate();
 
     const shortenName = (name) => {
         if (name.length > 30) {
@@ -30,12 +33,16 @@ function UserSets ({ profileSets }) {
         )
     })
 
+    const travelNewSet = () => {
+        navigate('/newquestionset')
+    }
+
     return (
         <div className="component-container">
             <Link to='/' className='back-home-button'>← Back Home</Link>
             <div className='user-sets-container'>
                 <h1 className='user-sets-main-header'>Your Question Sets</h1>
-                <h1 className='add-new-set-button'>Add New Set+</h1>
+                <h1 className='add-new-set-button' onClick={travelNewSet}>Add New Set+</h1>
                 <div className='set-list-container'>
                     <div className='set-list'>
                         {mappedSets}
