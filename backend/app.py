@@ -36,19 +36,15 @@ def post_user():
         lastname = data.get('lastName')
 
         existing_profile = User.query.filter_by(username=username).first()
-        print(existing_profile)
         if existing_profile:
             return {'error': 'Profile with this username already exists'}, 400
-        print('not existing profile')
         new_user = User(
             username=username,
             password=bcrypt.generate_password_hash(password),
             firstname=firstname,
             lastname=lastname,
         )
-        print('new user was created')
         db.session.add(new_user)
-        print('user was added')
         db.session.commit()
 
         return {'message': 'New user saved succesfully'}, 201
@@ -61,6 +57,7 @@ def post_user():
 def post_question(question):
     try:
         print(question)
+        
         return {'message': 'Saved question'}
     except Exception as e:
         print(e)
@@ -69,9 +66,26 @@ def post_question(question):
 @app.post('/questionset')
 def post_questionset():
     try:
-        print('got here')
         data = request.get_json()
-        print(data)
+        name = data.get('title')
+        print(name)
+        print('DONUTSHACK')
+        created_by=data.get('user_id')
+
+        existing_title = QuestionSet.query.filter_by(name=name).first()
+        print(existing_title)
+        if existing_title:
+            return {'error': 'Title already exists'}, 400
+        new_questionset = QuestionSet(
+            name=name,
+            created_at=datetime.utcnow,
+            created_by=created_by,
+        )
+        print('about to add')
+        print(new_questionset)
+        db.session.add(new_questionset)
+        print('about to commit')
+        db.session.commit()
         for i in data:
             post_question(i)
         return {'message': 'New user saved succesfully'}, 201

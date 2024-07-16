@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 function NewQuestionSet({ loggedIn, user }) {
     const [questions, setQuestions] = useState(['']);
+    const [test, setTest] = useState('test')
 
     console.log(questions)
     console.log(user)
@@ -29,12 +30,15 @@ function NewQuestionSet({ loggedIn, user }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Questions submitted:', questions);
+        const questionSet = {
+            test,
+        };
         const response = await fetch('http://127.0.0.1:5555/questionset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(questions),
+            body: JSON.stringify(questionSet),
         });
     }
 
