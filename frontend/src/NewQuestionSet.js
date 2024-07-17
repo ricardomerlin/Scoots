@@ -12,6 +12,8 @@ function NewQuestionSet({ loggedIn, user }) {
         console.log('posting')
     }
 
+    console.log(user)
+
     const addQuestion = () => {
         setQuestions([...questions, '']);
     }
@@ -30,8 +32,10 @@ function NewQuestionSet({ loggedIn, user }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Questions submitted:', questions);
+        const userID = user.id
         const questionSet = {
             test,
+            userID
         };
         const response = await fetch('http://127.0.0.1:5555/questionset', {
             method: 'POST',

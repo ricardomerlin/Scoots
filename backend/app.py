@@ -70,15 +70,15 @@ def post_questionset():
         name = data.get('title')
         print(name)
         print('DONUTSHACK')
-        created_by=data.get('user_id')
+        created_by=data.get('userID')
 
         existing_title = QuestionSet.query.filter_by(name=name).first()
         print(existing_title)
         if existing_title:
             return {'error': 'Title already exists'}, 400
         new_questionset = QuestionSet(
-            name=name,
-            created_at=datetime.utcnow,
+            name='hmm',
+            created_at=datetime.utcnow(),
             created_by=created_by,
         )
         print('about to add')
@@ -87,6 +87,7 @@ def post_questionset():
         print('about to commit')
         db.session.commit()
         for i in data:
+            print('running the loop')
             post_question(i)
         return {'message': 'New user saved succesfully'}, 201
 
