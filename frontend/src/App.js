@@ -24,6 +24,8 @@ function App() {
     }
   }, [profileID]);
 
+  console.log(user)
+
   const selectRoute = () => {
     setRouteSelected(true);
   }
@@ -38,6 +40,7 @@ function App() {
     .then(res => res.json())
     .then(data => {
       setUser(data)
+      console.log(data)
       setLoggedIn(true)
     })
     .catch(error => {

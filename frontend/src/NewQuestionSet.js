@@ -3,10 +3,11 @@ import { useState } from 'react';
 
 function NewQuestionSet({ loggedIn, user }) {
     const [questions, setQuestions] = useState(['']);
-    const [test, setTest] = useState('test')
+    const [title, setTitle] = useState('')
 
     console.log(questions)
     console.log(user)
+    console.log(title)
 
     const postQuestionSet = () => {
         console.log('posting')
@@ -34,7 +35,7 @@ function NewQuestionSet({ loggedIn, user }) {
         console.log('Questions submitted:', questions);
         const userID = user.id
         const questionSet = {
-            test,
+            title,
             userID
         };
         const response = await fetch('http://127.0.0.1:5555/questionset', {
@@ -53,11 +54,18 @@ function NewQuestionSet({ loggedIn, user }) {
             <div className="new-question-set-container">
                 <h1>Create a New Question Set</h1>
                 {loggedIn ?
-                <h1>Hi</h1>    
+                <h1>Enter your set's name</h1>    
                 :
-                <h1>You are not logged in</h1>
+                <h1>You are not logged in, so this set will not be saved.</h1>
             }
                 <form className='create-question-set-form' onSubmit={handleSubmit}>
+                    <label>
+                        <input
+                            type='text'
+                            value={title}
+                            onChangeCapture={(e) => setTitle(e.target.value)}
+                        />
+                    </label>
                     {questions.map((question, index) => (
                         <div key={index} className='question-input'>
                             <label>

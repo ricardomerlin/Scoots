@@ -68,8 +68,6 @@ def post_questionset():
     try:
         data = request.get_json()
         name = data.get('title')
-        print(name)
-        print('DONUTSHACK')
         created_by=data.get('userID')
 
         existing_title = QuestionSet.query.filter_by(name=name).first()
@@ -77,7 +75,7 @@ def post_questionset():
         if existing_title:
             return {'error': 'Title already exists'}, 400
         new_questionset = QuestionSet(
-            name='hmm',
+            name=name,
             created_at=datetime.utcnow(),
             created_by=created_by,
         )

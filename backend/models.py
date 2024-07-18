@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
-from sqlalchemy import ForeignKey
 from datetime import datetime
 
 db = SQLAlchemy()
@@ -18,6 +17,8 @@ class User(db.Model, SerializerMixin):
     games = db.relationship('Game', back_populates='creator')
     question_sets = db.relationship('QuestionSet', back_populates='creator')
 
+    serialize_rules = ('-games.creator', '-question_sets.creator')
+
     def __repr__(self):
         return f'<User {self.username}>'
 
@@ -33,6 +34,8 @@ class Game(db.Model, SerializerMixin):
     creator = db.relationship('User', back_populates='games')
     question_set = db.relationship('QuestionSet', back_populates='games')
     questions = db.relationship('Question', back_populates='game')
+
+    serialize_rules = ('-creator.games', '-question_set.games', '-questions.game')
 
     def __repr__(self):
         return f'<Game {self.title}>'
@@ -51,7 +54,7 @@ class Question(db.Model, SerializerMixin):
     question_set = db.relationship('QuestionSet', back_populates='questions')
     answers = db.relationship('Answer', back_populates='question')
 
-    serialize_rules = ('-game', '-question_set')
+    serialize_rules = ('-game.questions', '-question_set.questions', '-answers.question')
 
     def __repr__(self):
         return f'<Question {self.question}>'
@@ -66,7 +69,7 @@ class Answer(db.Model, SerializerMixin):
 
     question = db.relationship('Question', back_populates='answers')
 
-    serialize_rules = ('-question',)
+    serialize_rules = ('-question.answers',)
 
     def __repr__(self):
         return f'<Answer {self.answer}>'
@@ -77,14 +80,14 @@ class QuestionSet(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
     created_by = db.Column(db.Integer, db.ForeignKey('users_table.id'))
 
     creator = db.relationship('User', back_populates='question_sets')
     games = db.relationship('Game', back_populates='question_set')
     questions = db.relationship('Question', back_populates='question_set')
 
-    serialize_rules = ('-questions', '-games')
+    serialize_rules = ('-creator.question_sets', '-games.question_set', '-questions.question_set')
 
     def __repr__(self):
         return f'<QuestionSet {self.name}>'
