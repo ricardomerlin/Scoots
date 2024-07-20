@@ -48,8 +48,10 @@ class Question(db.Model, SerializerMixin):
     answer = db.Column(db.String(80), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     question_set_id = db.Column(db.Integer, db.ForeignKey('question_sets_table.id'))
+    game_id = db.Column(db.Integer, db.ForeignKey('games_table.id'))  # Add this line
 
     question_set = db.relationship('QuestionSet', back_populates='questions')
+    game = db.relationship('Game', back_populates='questions')  # Modify this line
     answers = db.relationship('Answer', back_populates='question')
 
     serialize_rules = ('-game.questions', '-question_set.questions', '-answers.question')
@@ -78,7 +80,6 @@ class QuestionSet(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
     created_by = db.Column(db.Integer, db.ForeignKey('users_table.id'))
 
     creator = db.relationship('User', back_populates='question_sets')
