@@ -47,10 +47,8 @@ class Question(db.Model, SerializerMixin):
     question = db.Column(db.String(80), nullable=False)
     answer = db.Column(db.String(80), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    game_id = db.Column(db.Integer, db.ForeignKey('games_table.id'))
     question_set_id = db.Column(db.Integer, db.ForeignKey('question_sets_table.id'))
 
-    game = db.relationship('Game', back_populates='questions')
     question_set = db.relationship('QuestionSet', back_populates='questions')
     answers = db.relationship('Answer', back_populates='question')
 

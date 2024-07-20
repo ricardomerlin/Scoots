@@ -1,13 +1,14 @@
 import './styles/NewQuestionSet.css';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function NewQuestionSet({ loggedIn, user }) {
     const [questions, setQuestions] = useState(['']);
     const [title, setTitle] = useState('')
 
-    console.log(questions)
-    console.log(user)
-    console.log(title)
+    // console.log(questions)
+    // console.log(user)
+    // console.log(title)
 
     const postQuestionSet = () => {
         console.log('posting')
@@ -33,24 +34,58 @@ function NewQuestionSet({ loggedIn, user }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Questions submitted:', questions);
-        const userID = user.id
+        const userID = user.id;
         const questionSet = {
             title,
             userID
         };
-        const response = await fetch('http://127.0.0.1:5555/questionset', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(questionSet),
-        });
-    }
+        try {
+            const response = await fetch('http://127.0.0.1:5555/questionset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(questionSet),
+            });
+    
+            if (response.ok) {
+                console.log('Question set created successfully');
+                const data = await response.json();
+                const questionSetID = data.id;
+                
+                for (let question of questions) {
+                    const questionData = {
+                        question,
+                        questionSetID,
+                    };
+                    const questionResponse = await fetch('http://127.0.0.1:5555/question', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(questionData),
+                    });
+    
+                    if (!questionResponse.ok) {
+                        console.error('Failed to post question:', question);
+                    }
+                }
+    
+                console.log('All questions posted successfully');
+            } else {
+                console.error('Failed to create question set');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+    
 
     console.log(loggedIn)
 
     return (
         <div className="component-container">
+            <Link to='/' className='back-home-button'>← Back Home</Link>
             <div className="new-question-set-container">
                 <h1>Create a New Question Set</h1>
                 {loggedIn ?
@@ -63,7 +98,7 @@ function NewQuestionSet({ loggedIn, user }) {
                         <input
                             type='text'
                             value={title}
-                            onChangeCapture={(e) => setTitle(e.target.value)}
+                            onChange={(e) => setTitle(e.target.value)}
                         />
                     </label>
                     {questions.map((question, index) => (

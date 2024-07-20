@@ -6,7 +6,7 @@
     height: 100vh;
     width: 100vw;
     background-color: #54dc8f;
-    font-family: 'Fredoka One', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-image: url("https://www.transparenttextures.com/patterns/checkered-pattern.png");
 }
 
@@ -27,4 +27,14 @@
     font: inherit;
     cursor: pointer;
     outline: inherit;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.back-home-button:hover {
+    color: #b9ffee;
+    transform: scale(1.05);
+    background-color: white;
+    border-radius: 5px;
+    
 }

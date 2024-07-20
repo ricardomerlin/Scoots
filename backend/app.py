@@ -54,9 +54,12 @@ def post_user():
         return {'error': 'Error saving user profile'}, 400
     
 @app.post('/question')
-def post_question(question):
+def post_question():
     try:
-        print(question)
+        data = request.get_json()
+        question = data.get('question')
+        answer = 'testing'
+        question_set_id = data.get('questionSetID')
         
         return {'message': 'Saved question'}
     except Exception as e:
@@ -84,9 +87,6 @@ def post_questionset():
         db.session.add(new_questionset)
         print('about to commit')
         db.session.commit()
-        for i in data:
-            print('running the loop')
-            post_question(i)
         return {'message': 'New user saved succesfully'}, 201
 
     
