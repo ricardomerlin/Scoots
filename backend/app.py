@@ -60,6 +60,18 @@ def post_question():
         question = data.get('question')
         answer = 'testing'
         question_set_id = data.get('questionSetID')
+
+        new_question = Question(
+            question=question,
+            answer=answer,
+            question_set_id=question_set_id,
+            game_id=1
+        )
+
+        db.session.add(new_question)
+        db.session.commit()
+        print(question)
+        print(question_set_id)
         
         return {'message': 'Saved question'}
     except Exception as e:
@@ -87,7 +99,7 @@ def post_questionset():
         db.session.add(new_questionset)
         print('about to commit')
         db.session.commit()
-        return {'message': 'New user saved succesfully'}, 201
+        return jsonify(id=new_questionset.id), 201
 
     
     except Exception as e:

@@ -49,29 +49,35 @@ function NewQuestionSet({ loggedIn, user }) {
             });
     
             if (response.ok) {
-                console.log('Question set created successfully');
                 const data = await response.json();
-                const questionSetID = data.id;
-                
-                for (let question of questions) {
-                    const questionData = {
-                        question,
-                        questionSetID,
-                    };
-                    const questionResponse = await fetch('http://127.0.0.1:5555/question', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(questionData),
-                    });
+                console.log('Response data:', data);
     
-                    if (!questionResponse.ok) {
-                        console.error('Failed to post question:', question);
+                if (data && data.id) {
+                    const questionSetID = data.id;
+                    console.log('Question set ID:', questionSetID);
+    
+                    for (let question of questions) {
+                        const questionData = {
+                            question,
+                            questionSetID,
+                        };
+                        const questionResponse = await fetch('http://127.0.0.1:5555/question', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(questionData),
+                        });
+    
+                        if (!questionResponse.ok) {
+                            console.error('Failed to post question:', question);
+                        }
                     }
-                }
     
-                console.log('All questions posted successfully');
+                    console.log('All questions posted successfully');
+                } else {
+                    console.error('Question set ID not found in response data');
+                }
             } else {
                 console.error('Failed to create question set');
             }
@@ -79,6 +85,7 @@ function NewQuestionSet({ loggedIn, user }) {
             console.error('Error:', error);
         }
     };
+    
     
 
     console.log(loggedIn)
