@@ -76,7 +76,7 @@ def post_question():
         return {'message': 'Saved question'}
     except Exception as e:
         print(e)
-        return {'error': 'Error saving question'}, 201
+        return {'error': 'Error saving question'}, 400
     
 @app.post('/questionset')
 def post_questionset():
@@ -100,6 +100,33 @@ def post_questionset():
         print('about to commit')
         db.session.commit()
         return jsonify(id=new_questionset.id), 201
+    except Exception as e:
+        print(e)
+        return {'error': 'Error saving question set'}, 400
+    
+@app.post('/answer')
+def post_answer():
+    try:
+        data = request.get_json()
+        answer_text = data.get('answer')
+        question_id = data.get('questionID')
+
+        new_answer = Answer(
+            answer=answer_text,
+            question_id=question_id
+        )
+
+        print(new_answer)
+
+        db.session.add(new_answer)
+        db.session.commit()
+        
+        return {'message': 'Answer saved successfully', 'id': new_answer.id}, 201
+    except Exception as e:
+        print(e)
+        return {'error': 'Error saving answer'}, 400
+
+
 
     
     except Exception as e:

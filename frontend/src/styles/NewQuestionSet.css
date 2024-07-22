@@ -5,6 +5,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    height: 100vh;
+    padding: 20px;
 }
 
 .new-question-set-container {
@@ -12,7 +16,7 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 500px;
 }
 
 h1 {
@@ -33,9 +37,9 @@ h1 {
     color: #555;
 }
 
-.question-input {
+.questionInput {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin-bottom: 15px;
     background-color: #f9f9f9;
     padding: 10px;
@@ -43,29 +47,35 @@ h1 {
     border: 1px solid #ddd;
 }
 
-.question-input label {
-    flex: 1;
-    margin-right: 10px;
+.dummyAnswerInput {
+
 }
 
-.question-input input {
-    flex: 2;
+.question-input label, .dummy-answer-input label {
+    flex: 1;
+    margin-bottom: 10px;
+}
+
+.question-input input, .dummy-answer-input input {
+    flex: 1;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin-bottom: 10px;
 }
 
-.question-input button {
-    margin-left: 10px;
+.question-input button, .dummy-answer-input button {
+    align-self: flex-start;
     background-color: #ff6347; /* tomato */
     color: white;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 4px;
+    margin-top: 10px;
 }
 
-.question-input button:hover {
+.question-input button:hover, .dummy-answer-input button:hover {
     background-color: #ff4500; /* orange red */
 }
 
@@ -77,6 +87,7 @@ button[type="button"] {
     cursor: pointer;
     border-radius: 4px;
     margin-bottom: 10px;
+    align-self: center;
 }
 
 button[type="button"]:hover {
@@ -91,8 +102,22 @@ button[type="submit"] {
     cursor: pointer;
     border-radius: 4px;
     margin-top: 20px;
+    align-self: center;
 }
 
 button[type="submit"]:hover {
     background-color: #218838;
+}
+
+.back-home-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.back-home-button:hover {
+    color: #0056b3;
 }
