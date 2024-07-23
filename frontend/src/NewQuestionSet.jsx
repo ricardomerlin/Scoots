@@ -49,7 +49,7 @@ function NewQuestionSet({ loggedIn, user }) {
 
     const postAnswer = async (answer, questionID) => {
         try {
-            const response = await fetch('http://127.0.0.1:5555/answer', {
+            const response = await fetch('api/answer', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ function NewQuestionSet({ loggedIn, user }) {
             userID
         };
         try {
-            const response = await fetch('http://127.0.0.1:5555/questionset', {
+            const response = await fetch('api/questionset', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ function NewQuestionSet({ loggedIn, user }) {
                             dummyAnswers: questionData.dummyAnswers,
                             questionSetID,
                         };
-                        const questionResponse = await fetch('http://127.0.0.1:5555/question', {
+                        const questionResponse = await fetch('api/question', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

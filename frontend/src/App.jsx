@@ -19,6 +19,23 @@ function App() {
   const [profileID, setProfileID] = useState(null)
 
   useEffect(() => {
+    console.log('checking session')
+    fetch(`api/check_session`).then((res) => {
+        if (res.ok) {
+            res.json().then((user) => {
+              setLoggedIn(true)
+              setUser(user)
+              console.log('yesssss')
+        });
+        } else {
+          setLoggedIn(false)
+          setUser(null)
+          console.log('nooooo')
+        }
+    });
+  }, []);
+
+  useEffect(() => {
     if (profileID) {
       getProfileDetails()
     }
@@ -36,7 +53,7 @@ function App() {
   }
 
   const getProfileDetails = () => {
-    fetch(`http://127.0.0.1:5555/user/${profileID}`)
+    fetch(`api/user/${profileID}`)
     .then(res => res.json())
     .then(data => {
       setUser(data)
@@ -191,7 +208,8 @@ function App() {
   }
 
   const submitLogin = async (username, password) => {
-    const response = await fetch('http://127.0.0.1:5555/login', {
+    console.log('logging in')
+    const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -213,7 +231,7 @@ function App() {
   }
 
   const handleLogout = async () => {
-    const response = await fetch('http://127.0.0.1:5555/logout', {
+    const response = await fetch('/api/logout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -232,23 +250,25 @@ function App() {
   
 
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected}/>} />
-          <Route path="/HomePage" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected} handleLogout={handleLogout}/>} />
-          <Route path="/AboutPage" element={<AboutPage />} />
-          <Route path="/JoinRoom" element={<JoinRoom loggedIn={loggedIn}/>} />
-          <Route path="/CreateRoom" element={<CreateRoom profileSets={profileInformation.savedSets}/>} />
-          <Route path="/LoginScreen" element={<LoginScreen submitLogin={submitLogin} loggedIn={loggedIn}/>} />
-          <Route path="/ProfilePage" element={<ProfilePage profileInformation={profileInformation}/>} />
-          <Route path="/UserSets" element={<UserSets profileSets={profileInformation.savedSets}/>} />
-          <Route path="/GameRunning" element={<GameRunning /> }/>
-          <Route path="/CreateUser" element={<CreateUser />}/>
-          <Route path="/NewQuestionSet" element={<NewQuestionSet loggedIn={loggedIn} user={user}/>}/>
-        </Routes>
-      </div>
-    </Router>
+    <>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected}/>} />
+            <Route path="/HomePage" element={<HomePage loggedIn={loggedIn} selectRoute={selectRoute} routeSelected={routeSelected} handleLogout={handleLogout}/>} />
+            <Route path="/AboutPage" element={<AboutPage />} />
+            <Route path="/JoinRoom" element={<JoinRoom loggedIn={loggedIn}/>} />
+            <Route path="/CreateRoom" element={<CreateRoom profileSets={profileInformation.savedSets}/>} />
+            <Route path="/LoginScreen" element={<LoginScreen submitLogin={submitLogin} loggedIn={loggedIn}/>} />
+            <Route path="/ProfilePage" element={<ProfilePage profileInformation={profileInformation}/>} />
+            <Route path="/UserSets" element={<UserSets profileSets={profileInformation.savedSets}/>} />
+            <Route path="/GameRunning" element={<GameRunning /> }/>
+            <Route path="/CreateUser" element={<CreateUser />}/>
+            <Route path="/NewQuestionSet" element={<NewQuestionSet loggedIn={loggedIn} user={user}/>}/>
+          </Routes>
+        </div>
+      </Router>
+    </>
   );
 }
 

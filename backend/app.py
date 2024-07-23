@@ -10,7 +10,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = os.getenv('CLIENT_SECRET')
-CORS(app, origins=['http://localhost:3000'])
+CORS(app, origins=['http://localhost:5173'])
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 migrate = Migrate(app, db)
@@ -18,7 +18,20 @@ bcrypt = Bcrypt(app)
 
 db.init_app(app)
 
-@app.get('/user/<int:id>')
+@app.get('/')
+def home():
+    return 'Hello World!'
+
+@app.get('/api/check_session')
+def check_session():
+    user = db.session.get(User, session.get('user_id'))
+    print(f'check session {session.get("user_id")}')
+    if user:
+        return user.to_dict(rules=['-password']), 200
+    else:
+        return {"message": "No user logged in"}, 401
+
+@app.get('/api/user/<int:id>')
 def get_user_by_id(id):
     user = db.session.get(User, id)
     if not user:
@@ -26,7 +39,7 @@ def get_user_by_id(id):
     user_dict = user.to_dict()
     return user_dict, 202
 
-@app.post('/user')
+@app.post('/api/user')
 def post_user():
     try:
         data = request.get_json()
@@ -53,7 +66,7 @@ def post_user():
         print(e)
         return {'error': 'Error saving user profile'}, 400
     
-@app.post('/question')
+@app.post('/api/question')
 def post_question():
     try:
         data = request.get_json()
@@ -78,7 +91,7 @@ def post_question():
         print(e)
         return {'error': 'Error saving question'}, 400
     
-@app.post('/questionset')
+@app.post('/api/questionset')
 def post_questionset():
     try:
         data = request.get_json()
@@ -104,7 +117,7 @@ def post_questionset():
         print(e)
         return {'error': 'Error saving question set'}, 400
     
-@app.post('/answer')
+@app.post('/api/answer')
 def post_answer():
     try:
         data = request.get_json()
@@ -127,17 +140,7 @@ def post_answer():
         return {'error': 'Error saving answer'}, 400
 
 
-
-    
-    except Exception as e:
-        print(e)
-        return {'error': 'Error saving new question set'}
-
-
-
-
-
-@app.post('/login')
+@app.post('/api/login')
 def post_login():
     data = request.get_json()
     username = data.get('username')
@@ -151,7 +154,7 @@ def post_login():
     session['user_id'] = user.id
     return jsonify({'message': 'Login successful', 'id': user.id}), 200
 
-@app.post('/logout')
+@app.post('/api/logout')
 def post_logout():
     session.pop("user_id", None)
     return jsonify({'message': 'Logout successful'}), 200

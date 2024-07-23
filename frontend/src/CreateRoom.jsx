@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import NewSetForm from './CreateRoomComponents/NewSetForm.js'; 
-import QuestionSetList from './CreateRoomComponents/QuestionSetList.js';
+import NewSetForm from './CreateRoomComponents/NewSetForm.jsx'; 
+import QuestionSetList from './CreateRoomComponents/QuestionSetList.jsx';
 import './styles/CreateRoom.css';
 
 
