@@ -17,23 +17,30 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [routeSelected, setRouteSelected] = useState(false);
   const [profileID, setProfileID] = useState(null)
+  const [sets, getQuestionSets] = useState([])
 
   useEffect(() => {
-    console.log('checking session')
-    fetch(`api/check_session`).then((res) => {
+    console.log('checking session');
+    fetch(`/api/check_session`)
+      .then((res) => {
         if (res.ok) {
-            res.json().then((user) => {
-              setLoggedIn(true)
-              setUser(user)
-              console.log('yesssss')
-        });
+          return res.json();
         } else {
-          setLoggedIn(false)
-          setUser(null)
-          console.log('nooooo')
+          throw new Error('Not logged in');
         }
-    });
+      })
+      .then((user) => {
+        setLoggedIn(true);
+        setUser(user);
+        console.log('User logged in:', user);
+      })
+      .catch((error) => {
+        setLoggedIn(false);
+        setUser(null);
+        console.log('No user logged in');
+      });
   }, []);
+  
 
   useEffect(() => {
     if (profileID) {
@@ -41,7 +48,6 @@ function App() {
     }
   }, [profileID]);
 
-  console.log(user)
 
   const selectRoute = () => {
     setRouteSelected(true);

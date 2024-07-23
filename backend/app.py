@@ -2,11 +2,11 @@ from flask import Flask, request, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
-from flask import make_response
 from models import db, User, Game, Question, Answer, QuestionSet
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 import os
+import pytz
 
 app = Flask(__name__)
 app.secret_key = os.getenv('CLIENT_SECRET')
@@ -24,20 +24,25 @@ def home():
 
 @app.get('/api/check_session')
 def check_session():
-    user = db.session.get(User, session.get('user_id'))
-    print(f'check session {session.get("user_id")}')
-    if user:
-        return user.to_dict(rules=['-password']), 200
-    else:
+    user_id = session.get('user_id')
+    print(f'check session {user_id}')
+    
+    if user_id is None:
         return {"message": "No user logged in"}, 401
+
+    user = db.session.get(User, user_id)
+    if user is None:
+        return {"message": "No user logged in"}, 401
+
+    return user.to_dict(rules=['-password']), 200
 
 @app.get('/api/user/<int:id>')
 def get_user_by_id(id):
     user = db.session.get(User, id)
     if not user:
-        return {'Error': 'User not found'}
+        return {'Error': 'User not found'}, 404
     user_dict = user.to_dict()
-    return user_dict, 202
+    return user_dict, 200
 
 @app.post('/api/user')
 def post_user():
@@ -60,12 +65,12 @@ def post_user():
         db.session.add(new_user)
         db.session.commit()
 
-        return {'message': 'New user saved succesfully'}, 201
+        return {'message': 'New user saved successfully'}, 201
     
     except Exception as e:
         print(e)
         return {'error': 'Error saving user profile'}, 400
-    
+
 @app.post('/api/question')
 def post_question():
     try:
@@ -90,33 +95,39 @@ def post_question():
     except Exception as e:
         print(e)
         return {'error': 'Error saving question'}, 400
-    
+
 @app.post('/api/questionset')
 def post_questionset():
     try:
         data = request.get_json()
         name = data.get('title')
-        created_by=data.get('userID')
+        created_by = data.get('userID')
 
         existing_title = QuestionSet.query.filter_by(name=name).first()
-        print(existing_title)
         if existing_title:
             return {'error': 'Title already exists'}, 400
+
+        now_utc = datetime.utcnow()
+
+        eastern = pytz.timezone('US/Eastern')
+
+        now_eastern = now_utc.astimezone(eastern)
+
+        print(now_eastern)
+
         new_questionset = QuestionSet(
             name=name,
-            created_at=datetime.utcnow(),
+            created_at=now_eastern,
             created_by=created_by,
         )
-        print('about to add')
-        print(new_questionset)
+
         db.session.add(new_questionset)
-        print('about to commit')
         db.session.commit()
         return jsonify(id=new_questionset.id), 201
     except Exception as e:
         print(e)
         return {'error': 'Error saving question set'}, 400
-    
+
 @app.post('/api/answer')
 def post_answer():
     try:
@@ -129,8 +140,6 @@ def post_answer():
             question_id=question_id
         )
 
-        print(new_answer)
-
         db.session.add(new_answer)
         db.session.commit()
         
@@ -138,7 +147,6 @@ def post_answer():
     except Exception as e:
         print(e)
         return {'error': 'Error saving answer'}, 400
-
 
 @app.post('/api/login')
 def post_login():
@@ -158,7 +166,6 @@ def post_login():
 def post_logout():
     session.pop("user_id", None)
     return jsonify({'message': 'Logout successful'}), 200
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
