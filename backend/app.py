@@ -20,7 +20,7 @@ db.init_app(app)
 
 @app.get('/')
 def home():
-    return 'Hello World!'
+    return 'Hello Donkey!'
 
 @app.get('/api/check_session')
 def check_session():
@@ -43,6 +43,12 @@ def get_user_by_id(id):
         return {'Error': 'User not found'}, 404
     user_dict = user.to_dict()
     return user_dict, 200
+
+@app.get('/api/questionsets')
+def get_questionsets():
+    questionsets = QuestionSet.query.all()
+    questionsets_list = [questionset.to_dict() for questionset in questionsets]
+    return jsonify(questionsets_list), 200
 
 @app.post('/api/user')
 def post_user():
@@ -76,7 +82,7 @@ def post_question():
     try:
         data = request.get_json()
         question = data.get('question')
-        answer = 'testing'
+        answer = data.get('correctAnswer')
         question_set_id = data.get('questionSetID')
 
         new_question = Question(
@@ -88,6 +94,24 @@ def post_question():
 
         db.session.add(new_question)
         db.session.commit()
+
+        # Add dummy answers
+        dummy_answers = [
+            "Dummy Answer 1",
+            "Dummy Answer 2",
+            "Dummy Answer 3",
+            "Dummy Answer 4"
+        ]
+
+        for dummy_answer in dummy_answers:
+            new_answer = Answer(
+                answer=dummy_answer,
+                question_id=new_question.id
+            )
+            db.session.add(new_answer)
+
+        db.session.commit()
+
         print(question)
         print(question_set_id)
         
