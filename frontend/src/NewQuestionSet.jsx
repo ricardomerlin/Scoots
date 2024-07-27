@@ -90,18 +90,24 @@ function NewQuestionSet({ loggedIn, user }) {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Response data:', data);
+                console.log('response was ok')
     
                 if (data && data.id) {
+                    console.log('data and data.id')
+                    console.log(data)
+                    console.log(data.id)
                     const questionSetID = data.id;
                     console.log('Question set ID:', questionSetID);
     
                     for (let questionData of questions) {
+                        console.log('questionata of question')
                         const question = {
                             question: questionData.question,
                             correctAnswer: questionData.correctAnswer,
                             dummyAnswers: questionData.dummyAnswers,
                             questionSetID,
                         };
+                        console.log(question)
                         const questionResponse = await fetch('api/question', {
                             method: 'POST',
                             headers: {
@@ -112,7 +118,7 @@ function NewQuestionSet({ loggedIn, user }) {
     
                         if (questionResponse.ok) {
                             const questionData = await questionResponse.json();
-                            console.log('Question posted successfully:', questionData);
+                            console.log(questionData);
                             const questionID = questionData.id;
     
                             // Post the correct answer

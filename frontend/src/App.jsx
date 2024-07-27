@@ -71,6 +71,7 @@ function App() {
     })
   }
 
+  console.log(user)
 
   const profileInformation = {
     firstName: 'John',
@@ -83,13 +84,13 @@ function App() {
     profilePicture: 'https://m.media-amazon.com/images/I/71ZE-ISEadL._AC_UF1000,1000_QL80_.jpg',
     coverImage: 'https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg?cs=srgb&dl=pexels-pixabay-206359.jpg&fm=jpg',
     careerStats: {
-    setsCreated: 5,
-      questionsAnswered: 10,
-      competitiveRoundsPlayed: 7,
-      competitiveRoundsWon: 3,
-      casualRoundsPlayed: 10,
-      quizzesCreated: 5,
-      questionsAnswered: 10,
+      setsCreated: 5,
+        questionsAnswered: 10,
+        competitiveRoundsPlayed: 7,
+        competitiveRoundsWon: 3,
+        casualRoundsPlayed: 10,
+        quizzesCreated: 5,
+        questionsAnswered: 10,
     },
     previousGames: [
       {
@@ -266,7 +267,7 @@ function App() {
             <Route path="/JoinRoom" element={<JoinRoom loggedIn={loggedIn}/>} />
             <Route path="/CreateRoom" element={<CreateRoom profileSets={profileInformation.savedSets}/>} />
             <Route path="/LoginScreen" element={<LoginScreen submitLogin={submitLogin} loggedIn={loggedIn}/>} />
-            <Route path="/ProfilePage" element={<ProfilePage profileInformation={profileInformation}/>} />
+            <Route path="/ProfilePage" element={<ProfilePage profileInformation={profileInformation} user={user}/>} />
             <Route path="/UserSets" element={<UserSets profileSets={profileInformation.savedSets}/>} />
             <Route path="/GameRunning" element={<GameRunning /> }/>
             <Route path="/CreateUser" element={<CreateUser />}/>

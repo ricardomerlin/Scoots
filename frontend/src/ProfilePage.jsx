@@ -1,7 +1,30 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import './styles/ProfilePage.css';
 
-function ProfilePage ({ profileInformation }) {
+function ProfilePage ({ profileInformation, user }) {
+
+    const [nameSize, setNameSize] = useState(4)
+    const [exampleName, setExampleName] = useState('LONGASSEXAMPLE OFANAMEISWHATIMWRITING')
+    const [shorterExample, setShorterExample] = useState('This isShort')
+
+    useEffect(() => {
+        changeNameSize()
+    }, [])
+
+    const changeNameSize = () => {
+        let newSize = 5
+        for (let i = 0; i < (exampleName.length); i++) {
+            newSize -= 0.075
+            console.log(newSize)
+        }
+        setNameSize(newSize)
+        // console.log(newSize)
+    }
+
+    console.log(user.firstname.length + user.lastname.length)
+    console.log(user.firstname.length)
+
 
     return (
         <>
@@ -11,8 +34,8 @@ function ProfilePage ({ profileInformation }) {
                 <div className='profile-container'>
                     <div className='profile-container-left'>
                         <img className='profile-picture' src={profileInformation.profilePicture} alt='Profile Picture'/>
-                        <p className='profile-first-last-name'>{profileInformation.firstName} {profileInformation.lastName}</p>
-                        <p className='profile-user-name'>{profileInformation.username}</p>
+                        <p className='profile-first-last-name' style={{ fontSize: nameSize+'em'}}>{exampleName}</p>
+                        <p className='profile-user-name'>{user.username}</p>
                         <p className='profile-role'>Role: {profileInformation.role}</p>
                         <p className='profile-email'>{profileInformation.email}</p>
                         <p className='profile-date-joined'>Date Joined: {profileInformation.dateJoined}</p>

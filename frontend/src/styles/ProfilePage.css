@@ -56,9 +56,9 @@
 }
 
 .profile-first-last-name {
-    font-size: 4em;
     margin-top: 30px;
     margin-bottom: 5px;
+    text-align: center;
 }
 
 .profile-user-name {

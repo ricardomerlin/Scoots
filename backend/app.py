@@ -84,6 +84,7 @@ def post_question():
         question = data.get('question')
         answer = data.get('correctAnswer')
         question_set_id = data.get('questionSetID')
+        dummy_answers = data.get('dummyAnswers')
 
         new_question = Question(
             question=question,
@@ -95,15 +96,8 @@ def post_question():
         db.session.add(new_question)
         db.session.commit()
 
-        # Add dummy answers
-        dummy_answers = [
-            "Dummy Answer 1",
-            "Dummy Answer 2",
-            "Dummy Answer 3",
-            "Dummy Answer 4"
-        ]
-
         for dummy_answer in dummy_answers:
+            print(dummy_answer)
             new_answer = Answer(
                 answer=dummy_answer,
                 question_id=new_question.id
@@ -115,7 +109,7 @@ def post_question():
         print(question)
         print(question_set_id)
         
-        return {'message': 'Saved question'}
+        return jsonify(id=new_question.id), 201
     except Exception as e:
         print(e)
         return {'error': 'Error saving question'}, 400
@@ -163,6 +157,8 @@ def post_answer():
             answer=answer_text,
             question_id=question_id
         )
+
+        print(new_answer)
 
         db.session.add(new_answer)
         db.session.commit()
